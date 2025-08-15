@@ -1,140 +1,97 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trilha Cinética</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #e0f7fa, #e8f5e9);
-            color: #333;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Ilustrações no fundo */
-        .bg-image {
-            position: absolute;
-            opacity: 0.15;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .bg1 {
-            top: 20px;
-            left: -50px;
-            width: 250px;
-        }
-
-        .bg2 {
-            bottom: 50px;
-            right: -40px;
-            width: 280px;
-        }
-
-        .bg3 {
-            top: 200px;
-            right: 50%;
-            transform: translateX(50%);
-            width: 200px;
-            opacity: 0.1;
-        }
-
-        header {
-            background: #0288d1;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            font-size: 2rem;
-            font-weight: bold;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            position: relative;
-            z-index: 1;
-        }
-
-        main {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 30px 10px;
-            gap: 40px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .activity {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            max-width: 900px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .activity:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-        }
-
-        .activity h2 {
-            margin: 0;
-            color: #0288d1;
-        }
-
-        iframe {
-            border-radius: 10px;
-            width: 100%;
-            height: 380px;
-            border: none;
-        }
-
-        .arrow {
-            font-size: 3rem;
-            color: #43a047;
-            animation: bounce 1.5s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        @media (max-width: 768px) {
-            iframe {
-                height: 300px;
-            }
-            .arrow {
-                font-size: 2.5rem;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trilha Cinética</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #e0f7fa, #e8f5e9);
+        color: #333;
+    }
+    header {
+        background: #0288d1;
+        padding: 15px;
+        color: white;
+        text-align: center;
+        font-size: 1.8rem;
+    }
+    nav {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        background: #01579b;
+        padding: 10px;
+    }
+    nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+    nav a:hover {
+        color: #ffd54f;
+    }
+    .container {
+        padding: 20px;
+        display: none;
+        animation: fade 0.4s ease-in-out;
+    }
+    .active {
+        display: block;
+    }
+    iframe {
+        width: 100%;
+        height: 380px;
+        border-radius: 10px;
+        border: none;
+    }
+    @keyframes fade {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
 </head>
 <body>
-    <!-- Imagens decorativas -->
-    <img src="https://cdn-icons-png.flaticon.com/512/2913/2913461.png" class="bg-image bg1" alt="Moléculas">
-    <img src="https://cdn-icons-png.flaticon.com/512/2913/2913471.png" class="bg-image bg2" alt="Frascos de química">
-    <img src="https://cdn-icons-png.flaticon.com/512/2913/2913451.png" class="bg-image bg3" alt="Átomo">
 
-    <header>Trilha Cinética</header>
-    <main>
-        <div class="activity">
-            <h2>Atividade 1</h2>
-            <iframe src="https://wordwall.net/pt/embed/bc61963d722142209d7f15e09f3510aa?themeId=1&templateId=5&fontStackId=0" allowfullscreen></iframe>
-        </div>
+<header>Trilha Cinética</header>
 
-        <div class="arrow">⬇</div>
+<nav>
+    <a href="#atividade1">Atividade 1</a>
+    <a href="#atividade2">Atividade 2</a>
+    <a href="#creditos">Créditos</a>
+</nav>
 
-        <div class="activity">
-            <h2>Atividade 2</h2>
-            <iframe src="https://wordwall.net/pt/embed/4179f94b0ce14520ad339aad3ee6a76f?themeId=1&templateId=36&fontStackId=0" allowfullscreen></iframe>
-        </div>
-    </main>
+<!-- Rotas -->
+<div id="atividade1" class="container active">
+    <h2>Atividade 1</h2>
+    <iframe src="https://wordwall.net/pt/embed/bc61963d722142209d7f15e09f3510aa?themeId=1&templateId=5&fontStackId=0"></iframe>
+</div>
+
+<div id="atividade2" class="container">
+    <h2>Atividade 2</h2>
+    <iframe src="https://wordwall.net/pt/embed/4179f94b0ce14520ad339aad3ee6a76f?themeId=1&templateId=36&fontStackId=0"></iframe>
+</div>
+
+<div id="creditos" class="container">
+    <h2>Créditos</h2>
+    <p>Desenvolvido por <strong>Hiarlley Francisco</strong> — Trilha Cinética em formato interativo.</p>
+</div>
+
+<script>
+    function showRoute() {
+        const hash = window.location.hash || "#atividade1";
+        document.querySelectorAll(".container").forEach(c => c.classList.remove("active"));
+        const route = document.querySelector(hash);
+        if (route) {
+            route.classList.add("active");
+        }
+    }
+    window.addEventListener("hashchange", showRoute);
+    window.addEventListener("load", showRoute);
+</script>
+
 </body>
 </html>
