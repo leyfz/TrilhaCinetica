@@ -10,6 +10,36 @@
             font-family: 'Segoe UI', sans-serif;
             background: linear-gradient(135deg, #e0f7fa, #e8f5e9);
             color: #333;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Ilustrações no fundo */
+        .bg-image {
+            position: absolute;
+            opacity: 0.15;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg1 {
+            top: 20px;
+            left: -50px;
+            width: 250px;
+        }
+
+        .bg2 {
+            bottom: 50px;
+            right: -40px;
+            width: 280px;
+        }
+
+        .bg3 {
+            top: 200px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 200px;
+            opacity: 0.1;
         }
 
         header {
@@ -20,6 +50,8 @@
             font-size: 2rem;
             font-weight: bold;
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
         }
 
         main {
@@ -28,6 +60,8 @@
             align-items: center;
             padding: 30px 10px;
             gap: 40px;
+            position: relative;
+            z-index: 1;
         }
 
         .activity {
@@ -83,6 +117,11 @@
     </style>
 </head>
 <body>
+    <!-- Imagens decorativas -->
+    <img src="https://cdn-icons-png.flaticon.com/512/2913/2913461.png" class="bg-image bg1" alt="Moléculas">
+    <img src="https://cdn-icons-png.flaticon.com/512/2913/2913471.png" class="bg-image bg2" alt="Frascos de química">
+    <img src="https://cdn-icons-png.flaticon.com/512/2913/2913451.png" class="bg-image bg3" alt="Átomo">
+
     <header>Trilha Cinética</header>
     <main>
         <div class="activity">
