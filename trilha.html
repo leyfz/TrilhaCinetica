@@ -5,110 +5,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Trilha Cinética</title>
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
-        color: #333;
-        line-height: 1.6;
-    }
-    header {
-        background: linear-gradient(90deg, #0288d1, #43a047);
-        padding: 25px;
-        color: white;
-        text-align: center;
-        font-size: 2.2rem;
-        font-weight: bold;
-        text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
-        position: sticky;
-        top: 0;
-        z-index: 10;
-    }
-    .trilha {
-        max-width: 950px;
-        margin: 50px auto;
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 70px;
-        position: relative;
-    }
-    /* Linha da trilha */
-    .trilha::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 40px;
-        width: 6px;
-        height: 100%;
-        background: linear-gradient(180deg, #0288d1, #43a047, #ff9800, #9c27b0);
-        border-radius: 3px;
-    }
-    .etapa {
-        background: white;
-        padding: 25px;
-        border-radius: 18px;
-        box-shadow: 0 6px 16px rgba(0,0,0,0.12);
-        position: relative;
-        transition: transform 0.3s ease;
-    }
-    .etapa:hover {
-        transform: translateY(-5px);
-    }
-    .etapa h2 {
-        margin-bottom: 15px;
-        font-size: 1.6rem;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #e0f7fa, #f1f8e9); color: #333; line-height: 1.6; }
+    header { background: linear-gradient(90deg, #0288d1, #43a047); padding: 25px; color: white; text-align: center; font-size: 2.2rem; font-weight: bold; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); position: sticky; top: 0; z-index: 10; }
+    .trilha { max-width: 950px; margin: 50px auto; padding: 20px; display: flex; flex-direction: column; gap: 70px; position: relative; }
+    .trilha::before { content: ""; position: absolute; top: 0; left: 40px; width: 6px; height: 100%; background: linear-gradient(180deg, #0288d1, #43a047, #ff9800, #9c27b0, #f44336, #607d8b, #795548); border-radius: 3px; }
+    .etapa { background: white; padding: 25px; border-radius: 18px; box-shadow: 0 6px 16px rgba(0,0,0,0.12); position: relative; transition: transform 0.3s ease; }
+    .etapa:hover { transform: translateY(-5px); }
+    .etapa h2 { margin-bottom: 15px; font-size: 1.6rem; display: flex; align-items: center; gap: 10px; }
     .etapa:nth-child(1) h2 { color: #0288d1; }
     .etapa:nth-child(2) h2 { color: #43a047; }
     .etapa:nth-child(3) h2 { color: #ff9800; }
     .etapa:nth-child(4) h2 { color: #9c27b0; }
-    .etapa::before {
-        position: absolute;
-        top: 25px;
-        left: -2px;
-        font-size: 1.6rem;
-        background: #fff;
-        border-radius: 50%;
-        border: 3px solid #0288d1;
-        width: 38px;
-        height: 38px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0 0 8px rgba(0,0,0,0.2);
-    }
+    .etapa:nth-child(5) h2 { color: #f44336; }
+    .etapa:nth-child(6) h2 { color: #607d8b; }
+    .etapa:nth-child(7) h2 { color: #795548; }
+    .etapa::before { position: absolute; top: 25px; left: -2px; font-size: 1.6rem; background: #fff; border-radius: 50%; border: 3px solid #0288d1; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 8px rgba(0,0,0,0.2); }
     .etapa:nth-child(1)::before { content: "📘"; border-color: #0288d1; }
     .etapa:nth-child(2)::before { content: "⚗️"; border-color: #43a047; }
     .etapa:nth-child(3)::before { content: "🧬"; border-color: #ff9800; }
-    .etapa:nth-child(4)::before { content: "🎯"; border-color: #9c27b0; }
-    iframe {
-        width: 100%;
-        height: 420px;
-        border-radius: 15px;
-        border: none;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.15);
-    }
-    .descricao {
-        margin-bottom: 15px;
-        font-size: 1rem;
-        color: #555;
-    }
-    footer {
-        text-align: center;
-        background: #0288d1;
-        color: white;
-        padding: 15px;
-        margin-top: 50px;
-        font-size: 0.95rem;
-    }
+    .etapa:nth-child(4)::before { content: "🧪"; border-color: #9c27b0; }
+    .etapa:nth-child(5)::before { content: "🔬"; border-color: #f44336; }
+    .etapa:nth-child(6)::before { content: "📝"; border-color: #607d8b; }
+    .etapa:nth-child(7)::before { content: "🧫"; border-color: #795548; }
+    iframe { width: 100%; height: 420px; border-radius: 15px; border: none; box-shadow: 0 4px 14px rgba(0,0,0,0.15); }
+    .btn-finalizar, .btn-reiniciar { display: inline-block; margin-top: 15px; padding: 12px 25px; color: white; font-weight: bold; border: none; border-radius: 12px; cursor: pointer; transition: background 0.3s; text-decoration: none; }
+    .btn-finalizar { background: #43a047; }
+    .btn-finalizar:hover { background: #2e7d32; }
+    .btn-reiniciar { background: #0288d1; }
+    .btn-reiniciar:hover { background: #01579b; }
+    .conclusao { display: none; text-align: center; padding: 50px; font-size: 1.6rem; color: #795548; }
+    .conclusao.active { display: block; }
+    footer { text-align: center; background: #0288d1; color: white; padding: 15px; margin-top: 50px; font-size: 0.95rem; }
 </style>
 </head>
 <body>
@@ -117,51 +45,73 @@
 
 <section class="trilha">
 
-    <!-- Etapa 1 -->
     <div class="etapa">
         <h2>⚡ Etapa 1 — Introdução</h2>
-        <p class="descricao">Comece sua jornada entendendo os conceitos básicos da cinética química.</p>
-        <iframe 
-            src="https://wordwall.net/pt/embed/bc61963d722142209d7f15e09f3510aa?themeId=1&templateId=5&fontStackId=0" 
-            frameborder="0" 
-            allowfullscreen>
-        </iframe>
+        <iframe src="https://wordwall.net/pt/embed/bc61963d722142209d7f15e09f3510aa?themeId=1&templateId=5&fontStackId=0" frameborder="0" allowfullscreen></iframe>
     </div>
 
-    <!-- Etapa 2 -->
     <div class="etapa">
         <h2>🧪 Etapa 2 — Prática</h2>
-        <p class="descricao">Coloque em prática! Resolva os exercícios e veja como os conceitos funcionam.</p>
-        <iframe 
-            src="https://wordwall.net/pt/embed/4179f94b0ce14520ad339aad3ee6a76f?themeId=1&templateId=36&fontStackId=0" 
-            frameborder="0" 
-            allowfullscreen>
-        </iframe>
+        <iframe src="https://wordwall.net/pt/embed/4179f94b0ce14520ad339aad3ee6a76f?themeId=1&templateId=36&fontStackId=0" frameborder="0" allowfullscreen></iframe>
     </div>
 
-    <!-- Etapa 3 -->
     <div class="etapa">
         <h2>🧬 Etapa 3 — Exercícios Avançados</h2>
-        <p class="descricao">Agora teste seus conhecimentos com exercícios mais desafiadores.</p>
-        <iframe 
-            src="https://wordwall.net/pt/embed/d5e7d28428b44be1abf3bdeabdce9c7a?themeId=41&templateId=76&fontStackId=0" 
-            frameborder="0" 
-            allowfullscreen>
-        </iframe>
+        <iframe src="https://wordwall.net/pt/embed/d5e7d28428b44be1abf3bdeabdce9c7a?themeId=41&templateId=76&fontStackId=0" frameborder="0" allowfullscreen></iframe>
     </div>
 
-    <!-- Etapa Final -->
     <div class="etapa">
-        <h2>🎯 Etapa Final — Conclusão</h2>
-        <p class="descricao">Parabéns! Você completou toda a trilha de estudos em cinética química 🎉</p>
-        <p><strong>Desenvolvido por Hiarlley Francisco, Maria Miriam, Taiane Duarte, Larissa Vítoria - A2 </strong></p>
+        <h2>🔬 Etapa 4 — Revisão e Aplicação</h2>
+        <iframe src="https://wordwall.net/pt/embed/fafbe515de29467e98065f337bdd488e?themeId=1&templateId=46&fontStackId=0" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div class="etapa">
+        <h2>🧫 Etapa 5 — Exercícios Finais</h2>
+        <iframe src="https://wordwall.net/pt/embed/9914bebf07f544f2a78078b27c136cb9?themeId=1&templateId=3&fontStackId=0" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div class="etapa">
+        <h2>📝 Etapa 6 — Abra a Caixa</h2>
+        <iframe src="https://wordwall.net/pt/embed/f056a446b8ec43588ee89014b0cb39ae?themeId=21&templateId=30&fontStackId=0" frameborder="0" allowfullscreen></iframe>
+    </div>
+
+    <div class="etapa">
+        <h2>🧫 Etapa 7 — Exercícios Extras</h2>
+        <iframe src="https://wordwall.net/pt/embed/9914bebf07f544f2a78078b27c136cb9?themeId=1&templateId=3&fontStackId=0" frameborder="0" allowfullscreen></iframe>
+        <a href="#conclusao" class="btn-finalizar" onclick="showConclusao()">Finalizar Trilha</a>
     </div>
 
 </section>
 
+<section id="conclusao" class="conclusao">
+    <h2>🎉 Parabéns!</h2>
+    <p>Você concluiu toda a Trilha Cinética com sucesso! ⚗️💻</p>
+    <p>Continue estudando e aplicando os conceitos!</p>
+    <button class="btn-reiniciar" onclick="reiniciarTrilha()">Reiniciar Trilha 🔄</button>
+</section>
+
 <footer>
-    © 2025 - Trilha Cinética | Projeto Interativo com Química ⚗️ e Informática 💻
+    © 2025 - Trilha Cinética | Projeto Integrador com Química ⚗️ e Informática 💻 | Idealizado por: Hiarlley Francisco, Maria Miriam, Taiane Duarte e Larissa Vítoria | A2
 </footer>
+
+<script>
+    function showConclusao() {
+        document.querySelector('.conclusao').classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function reiniciarTrilha() {
+        document.querySelector('.conclusao').classList.remove('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        const iframes = document.querySelectorAll('.trilha iframe');
+        iframes.forEach(iframe => {
+            const src = iframe.src;
+            iframe.src = '';
+            setTimeout(() => iframe.src = src, 50);
+        });
+    }
+</script>
 
 </body>
 </html>
