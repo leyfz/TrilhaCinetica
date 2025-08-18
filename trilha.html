@@ -5,93 +5,163 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Trilha Cinética</title>
 <style>
-    body {
+    * {
         margin: 0;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #e0f7fa, #e8f5e9);
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
         color: #333;
+        line-height: 1.6;
     }
     header {
-        background: #0288d1;
-        padding: 15px;
+        background: linear-gradient(90deg, #0288d1, #43a047);
+        padding: 25px;
         color: white;
         text-align: center;
-        font-size: 1.8rem;
-    }
-    nav {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        background: #01579b;
-        padding: 10px;
-    }
-    nav a {
-        color: white;
-        text-decoration: none;
+        font-size: 2.2rem;
         font-weight: bold;
-        transition: 0.3s;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        position: sticky;
+        top: 0;
+        z-index: 10;
     }
-    nav a:hover {
-        color: #ffd54f;
-    }
-    .container {
+    .trilha {
+        max-width: 950px;
+        margin: 50px auto;
         padding: 20px;
-        display: none;
-        animation: fade 0.4s ease-in-out;
+        display: flex;
+        flex-direction: column;
+        gap: 70px;
+        position: relative;
     }
-    .active {
-        display: block;
+    /* Linha da trilha */
+    .trilha::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 40px;
+        width: 6px;
+        height: 100%;
+        background: linear-gradient(180deg, #0288d1, #43a047, #ff9800, #9c27b0);
+        border-radius: 3px;
     }
+    .etapa {
+        background: white;
+        padding: 25px;
+        border-radius: 18px;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+        position: relative;
+        transition: transform 0.3s ease;
+    }
+    .etapa:hover {
+        transform: translateY(-5px);
+    }
+    .etapa h2 {
+        margin-bottom: 15px;
+        font-size: 1.6rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .etapa:nth-child(1) h2 { color: #0288d1; }
+    .etapa:nth-child(2) h2 { color: #43a047; }
+    .etapa:nth-child(3) h2 { color: #ff9800; }
+    .etapa:nth-child(4) h2 { color: #9c27b0; }
+    .etapa::before {
+        position: absolute;
+        top: 25px;
+        left: -2px;
+        font-size: 1.6rem;
+        background: #fff;
+        border-radius: 50%;
+        border: 3px solid #0288d1;
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 8px rgba(0,0,0,0.2);
+    }
+    .etapa:nth-child(1)::before { content: "📘"; border-color: #0288d1; }
+    .etapa:nth-child(2)::before { content: "⚗️"; border-color: #43a047; }
+    .etapa:nth-child(3)::before { content: "🧬"; border-color: #ff9800; }
+    .etapa:nth-child(4)::before { content: "🎯"; border-color: #9c27b0; }
     iframe {
         width: 100%;
-        height: 380px;
-        border-radius: 10px;
+        height: 420px;
+        border-radius: 15px;
         border: none;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.15);
     }
-    @keyframes fade {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
+    .descricao {
+        margin-bottom: 15px;
+        font-size: 1rem;
+        color: #555;
+    }
+    footer {
+        text-align: center;
+        background: #0288d1;
+        color: white;
+        padding: 15px;
+        margin-top: 50px;
+        font-size: 0.95rem;
     }
 </style>
 </head>
 <body>
 
-<header>Trilha Cinética</header>
+<header>🌟 Trilha Cinética — Sua Jornada Interativa</header>
 
-<nav>
-    <a href="#atividade1">Atividade 1</a>
-    <a href="#atividade2">Atividade 2</a>
-    <a href="#creditos">Créditos</a>
-</nav>
+<section class="trilha">
 
-<!-- Rotas -->
-<div id="atividade1" class="container active">
-    <h2>Atividade 1</h2>
-    <iframe src="https://wordwall.net/pt/embed/bc61963d722142209d7f15e09f3510aa?themeId=1&templateId=5&fontStackId=0"></iframe>
-</div>
+    <!-- Etapa 1 -->
+    <div class="etapa">
+        <h2>⚡ Etapa 1 — Introdução</h2>
+        <p class="descricao">Comece sua jornada entendendo os conceitos básicos da cinética química.</p>
+        <iframe 
+            src="https://wordwall.net/pt/embed/bc61963d722142209d7f15e09f3510aa?themeId=1&templateId=5&fontStackId=0" 
+            frameborder="0" 
+            allowfullscreen>
+        </iframe>
+    </div>
 
-<div id="atividade2" class="container">
-    <h2>Atividade 2</h2>
-    <iframe src="https://wordwall.net/pt/embed/4179f94b0ce14520ad339aad3ee6a76f?themeId=1&templateId=36&fontStackId=0"></iframe>
-</div>
+    <!-- Etapa 2 -->
+    <div class="etapa">
+        <h2>🧪 Etapa 2 — Prática</h2>
+        <p class="descricao">Coloque em prática! Resolva os exercícios e veja como os conceitos funcionam.</p>
+        <iframe 
+            src="https://wordwall.net/pt/embed/4179f94b0ce14520ad339aad3ee6a76f?themeId=1&templateId=36&fontStackId=0" 
+            frameborder="0" 
+            allowfullscreen>
+        </iframe>
+    </div>
 
-<div id="creditos" class="container">
-    <h2>Créditos</h2>
-    <p>Desenvolvido por <strong>Hiarlley Francisco</strong> — Trilha Cinética em formato interativo.</p>
-</div>
+    <!-- Etapa 3 -->
+    <div class="etapa">
+        <h2>🧬 Etapa 3 — Exercícios Avançados</h2>
+        <p class="descricao">Agora teste seus conhecimentos com exercícios mais desafiadores.</p>
+        <iframe 
+            src="https://wordwall.net/pt/embed/d5e7d28428b44be1abf3bdeabdce9c7a?themeId=41&templateId=76&fontStackId=0" 
+            frameborder="0" 
+            allowfullscreen>
+        </iframe>
+    </div>
 
-<script>
-    function showRoute() {
-        const hash = window.location.hash || "#atividade1";
-        document.querySelectorAll(".container").forEach(c => c.classList.remove("active"));
-        const route = document.querySelector(hash);
-        if (route) {
-            route.classList.add("active");
-        }
-    }
-    window.addEventListener("hashchange", showRoute);
-    window.addEventListener("load", showRoute);
-</script>
+    <!-- Etapa Final -->
+    <div class="etapa">
+        <h2>🎯 Etapa Final — Conclusão</h2>
+        <p class="descricao">Parabéns! Você completou toda a trilha de estudos em cinética química 🎉</p>
+        <p><strong>Desenvolvido por Hiarlley Francisco, Maria Miriam, Taiane Duarte, Larissa Vítoria - A2 </strong></p>
+    </div>
+
+</section>
+
+<footer>
+    © 2025 - Trilha Cinética | Projeto Interativo com Química ⚗️ e Informática 💻
+</footer>
 
 </body>
 </html>
