@@ -1,118 +1,344 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Trilha Cinética</title>
 <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #e0f7fa, #f1f8e9); color: #333; line-height: 1.6; }
-    header { background: linear-gradient(90deg, #0288d1, #43a047); padding: 25px; color: white; text-align: center; font-size: 2.2rem; font-weight: bold; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); position: sticky; top: 0; z-index: 10; }
-    .trilha { max-width: 950px; margin: 50px auto; padding: 20px; display: flex; flex-direction: column; gap: 70px; position: relative; }
-    .trilha::before { content: ""; position: absolute; top: 0; left: 40px; width: 6px; height: 100%; background: linear-gradient(180deg, #0288d1, #43a047, #ff9800, #9c27b0, #f44336, #607d8b, #795548); border-radius: 3px; }
-    .etapa { background: white; padding: 25px; border-radius: 18px; box-shadow: 0 6px 16px rgba(0,0,0,0.12); position: relative; transition: transform 0.3s ease; }
-    .etapa:hover { transform: translateY(-5px); }
-    .etapa h2 { margin-bottom: 15px; font-size: 1.6rem; display: flex; align-items: center; gap: 10px; }
-    .etapa:nth-child(1) h2 { color: #0288d1; }
-    .etapa:nth-child(2) h2 { color: #43a047; }
-    .etapa:nth-child(3) h2 { color: #ff9800; }
-    .etapa:nth-child(4) h2 { color: #9c27b0; }
-    .etapa:nth-child(5) h2 { color: #f44336; }
-    .etapa:nth-child(6) h2 { color: #607d8b; }
-    .etapa:nth-child(7) h2 { color: #795548; }
-    .etapa::before { position: absolute; top: 25px; left: -2px; font-size: 1.6rem; background: #fff; border-radius: 50%; border: 3px solid #0288d1; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 8px rgba(0,0,0,0.2); }
-    .etapa:nth-child(1)::before { content: "📘"; border-color: #0288d1; }
-    .etapa:nth-child(2)::before { content: "⚗️"; border-color: #43a047; }
-    .etapa:nth-child(3)::before { content: "🧬"; border-color: #ff9800; }
-    .etapa:nth-child(4)::before { content: "🧪"; border-color: #9c27b0; }
-    .etapa:nth-child(5)::before { content: "🔬"; border-color: #f44336; }
-    .etapa:nth-child(6)::before { content: "📝"; border-color: #607d8b; }
-    .etapa:nth-child(7)::before { content: "🧫"; border-color: #795548; }
-    iframe { width: 100%; height: 420px; border-radius: 15px; border: none; box-shadow: 0 4px 14px rgba(0,0,0,0.15); }
-    .btn-finalizar, .btn-reiniciar { display: inline-block; margin-top: 15px; padding: 12px 25px; color: white; font-weight: bold; border: none; border-radius: 12px; cursor: pointer; transition: background 0.3s; text-decoration: none; }
-    .btn-finalizar { background: #43a047; }
-    .btn-finalizar:hover { background: #2e7d32; }
-    .btn-reiniciar { background: #0288d1; }
-    .btn-reiniciar:hover { background: #01579b; }
-    .conclusao { display: none; text-align: center; padding: 50px; font-size: 1.6rem; color: #795548; }
-    .conclusao.active { display: block; }
-    footer { text-align: center; background: #0288d1; color: white; padding: 15px; margin-top: 50px; font-size: 0.95rem; }
+  :root{
+    --bg:#121212;
+    --surface:#1d1d1f;
+    --surface-2:#222226;
+    --text:#e6e6e6;
+    --muted:#b9b9b9;
+    --brand:#03dac6;      /* destaque teal */
+    --accent:#bb86fc;     /* roxo elegante */
+    --line:#2e2e33;
+    --header-h:72px;
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height:1.6;
+  }
+
+  /* ===== Header ===== */
+  .site-header{
+    position: sticky; top:0; z-index:1000;
+    height: var(--header-h);
+    background: linear-gradient(90deg,#171717,#1f1f22,#1a1a1d);
+    border-bottom:1px solid var(--line);
+    display:flex; align-items:center; gap:12px;
+    padding:0 16px;
+  }
+  .header-inner{
+    width:100%;
+    max-width: 1100px;
+    margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px; font-weight:700;
+    letter-spacing:.2px;
+  }
+  .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--brand);box-shadow:0 0 10px rgba(3,218,198,.6)}
+  .title{font-size:1.25rem}
+
+  .menu-btn{
+    appearance:none; border:0; background:transparent; color:var(--text);
+    font-size:1.6rem; line-height:1; cursor:pointer; padding:8px 10px; border-radius:10px;
+  }
+  .menu-btn:focus-visible{outline:2px solid var(--brand); outline-offset:2px}
+
+  /* ===== Sidebar + overlay ===== */
+  .sidebar{
+    position: fixed; inset:0 auto 0 0;
+    width: 280px; transform: translateX(-100%);
+    background: var(--surface);
+    border-right:1px solid var(--line);
+    transition: transform .28s ease;
+    z-index:1500;
+    padding-top: var(--header-h);
+  }
+  .sidebar.open{ transform: translateX(0); }
+  .side-scroller{height:100%; overflow:auto; padding:16px 12px 24px}
+  .nav-title{color:var(--muted); font-size:.92rem; margin:4px 10px 10px}
+  .side-link{
+    display:block; text-decoration:none; color:#dcdcdc;
+    padding:10px 12px; border-radius:10px; margin:4px 6px;
+    border:1px solid transparent;
+    transition:.2s;
+  }
+  .side-link:hover{ background: var(--surface-2); border-color:#2f2f34; color:#fff }
+  .overlay{
+    position: fixed; inset:0; background: rgba(0,0,0,.45);
+    opacity:0; pointer-events:none; transition: opacity .25s ease; z-index:1400;
+  }
+  .overlay.show{ opacity:1; pointer-events:auto }
+
+  /* ===== Container principal (centralizado) ===== */
+  .container{
+    max-width: 1000px;
+    margin: 32px auto 60px;
+    padding: 0 20px;
+  }
+
+  /* ===== Trilha (linha + etapas) ===== */
+  .trilha{
+    position: relative;
+    display:flex; flex-direction:column; gap:56px;
+    padding-inline: 56px; /* simétrico p/ não “puxar” o layout */
+  }
+  .trilha::before{
+    content:""; position:absolute; top:0; bottom:0; left:56px;
+    width:4px; border-radius:2px;
+    background: linear-gradient(180deg, var(--brand), #6aa0ff, var(--accent), #7dd3fc 80%);
+    opacity:.9;
+  }
+  .etapa{
+    position:relative; background: var(--surface);
+    border:1px solid var(--line);
+    border-radius:16px; padding:22px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.35);
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    scroll-margin-top: calc(var(--header-h) + 16px); /* não ficar escondido pelo header */
+  }
+  .etapa:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 14px 30px rgba(0,0,0,.45);
+    border-color:#3a3a42;
+  }
+  .etapa::before{
+    content:""; position:absolute; top:22px; left:-20px;
+    width:16px; height:16px; border-radius:50%;
+    background: var(--brand); box-shadow:0 0 0 4px rgba(3,218,198,.18), 0 0 16px rgba(3,218,198,.55);
+  }
+  .etapa h2{
+    display:flex; align-items:center; gap:10px;
+    font-size:1.2rem; margin:0 0 14px;
+    color:#f3f3f3;
+  }
+  .etapa .tag{
+    font-size:.78rem; color:var(--muted); border:1px solid #2f2f34;
+    background: #1b1b1e; padding:4px 8px; border-radius:999px;
+  }
+
+  iframe{
+    width:100%; height:420px; border:0; border-radius:14px;
+    background:#0f0f11;
+    box-shadow: 0 8px 26px rgba(0,0,0,.45);
+  }
+
+  /* ===== Botões ===== */
+  .btn{
+    display:inline-block; text-decoration:none; cursor:pointer;
+    font-weight:600; border:0; border-radius:12px; padding:12px 18px;
+    transition:.2s; letter-spacing:.2px;
+  }
+  .btn-primary{ background: var(--brand); color:#0b1212 }
+  .btn-primary:hover{ filter:brightness(.95); transform: translateY(-1px) }
+  .btn-ghost{ background: var(--surface-2); color:#fff; border:1px solid #2f2f34 }
+  .btn-ghost:hover{ background:#2a2a2f }
+
+  /* ===== Conclusão bonita ===== */
+  .conclusao{
+    display:none;
+    margin-top: 28px;
+    background:
+      radial-gradient(1200px 200px at 50% -100px, rgba(187,134,252,.18), transparent 60%),
+      linear-gradient(180deg, #18181b, #1d1d21);
+    border:1px solid #2f2f34; border-radius:18px; padding:42px 28px;
+    text-align:center; box-shadow: 0 16px 40px rgba(0,0,0,.5);
+    scroll-margin-top: calc(var(--header-h) + 16px);
+    animation: fadeIn .45s ease both;
+  }
+  .conclusao.active{ display:block }
+  .conclusao h2{ margin:0 0 10px; font-size:1.9rem; color:#e9fdfa }
+  .conclusao p{ margin:8px 0; color:#d3d3d3 }
+  .conclusao .shine{
+    display:inline-block; padding:4px 10px; border-radius:999px;
+    border:1px solid #334; background: #101014; color:#b3f7ef; font-size:.86rem;
+    box-shadow: inset 0 0 16px rgba(3,218,198,.15), 0 0 22px rgba(187,134,252,.15);
+  }
+
+  @keyframes fadeIn{from{opacity:0; transform: translateY(8px)} to{opacity:1; transform:none}}
+
+  /* ===== Footer ===== */
+  footer{
+    margin-top:36px; padding:18px 16px; text-align:center; color:var(--muted);
+    border-top:1px solid var(--line);
+  }
+
+  /* ===== Acessibilidade de foco ===== */
+  a:focus-visible, .btn:focus-visible, .side-link:focus-visible{
+    outline: 2px solid var(--brand); outline-offset:2px;
+  }
+
+  /* ===== Responsivo ===== */
+  @media (min-width: 1000px){
+    .container{padding:0 24px}
+  }
 </style>
 </head>
 <body>
 
-<header>🌟 Trilha Cinética — Sua Jornada Interativa</header>
-
-<section class="trilha">
-
-    <div class="etapa">
-        <h2>⚡ Etapa 1 — Introdução</h2>
-        <iframe src="https://wordwall.net/pt/embed/bc61963d722142209d7f15e09f3510aa?themeId=1&templateId=5&fontStackId=0" frameborder="0" allowfullscreen></iframe>
+  <!-- Header -->
+  <header class="site-header" role="banner" aria-label="Cabeçalho">
+    <div class="header-inner">
+      <button class="menu-btn" aria-label="Abrir menu" aria-controls="sidebar" aria-expanded="false" id="menuBtn">☰</button>
+      <div class="brand">
+        <span class="dot" aria-hidden="true"></span>
+        <div class="title">Trilha Cinética — Jornada Interativa</div>
+      </div>
+      <div style="width:40px" aria-hidden="true"></div>
     </div>
+  </header>
 
-    <div class="etapa">
-        <h2>🧪 Etapa 2 — Prática</h2>
-        <iframe src="https://wordwall.net/pt/embed/4179f94b0ce14520ad339aad3ee6a76f?themeId=1&templateId=36&fontStackId=0" frameborder="0" allowfullscreen></iframe>
+  <!-- Sidebar + overlay -->
+  <aside class="sidebar" id="sidebar" aria-label="Menu lateral de navegação">
+    <div class="side-scroller">
+      <div class="nav-title">Navegação</div>
+      <a class="side-link" href="#etapa1">⚡ Etapa 1 — Introdução</a>
+      <a class="side-link" href="#etapa2">🧪 Etapa 2 — Prática</a>
+      <a class="side-link" href="#etapa3">🧬 Etapa 3 — Avançados</a>
+      <a class="side-link" href="#etapa4">🔬 Etapa 4 — Revisão</a>
+      <a class="side-link" href="#etapa5">🧫 Etapa 5 — Finais</a>
+      <a class="side-link" href="#etapa6">📝 Etapa 6 — Abra a Caixa</a>
+      <a class="side-link" href="#etapa7">🎯 Etapa 7 — Extras</a>
+      <a class="side-link" href="#conclusao">🎉 Conclusão</a>
     </div>
+  </aside>
+  <div class="overlay" id="overlay" aria-hidden="true"></div>
 
-    <div class="etapa">
-        <h2>🧬 Etapa 3 — Exercícios Avançados</h2>
-        <iframe src="https://wordwall.net/pt/embed/d5e7d28428b44be1abf3bdeabdce9c7a?themeId=41&templateId=76&fontStackId=0" frameborder="0" allowfullscreen></iframe>
+  <!-- Conteúdo centralizado -->
+  <main class="container" role="main">
+    <section class="trilha">
+
+      <article id="etapa1" class="etapa" aria-labelledby="etapa1-titulo">
+        <h2 id="etapa1-titulo">⚡ Etapa 1 — Introdução <span class="tag">Início</span></h2>
+        <iframe src="https://wordwall.net/pt/embed/bc61963d722142209d7f15e09f3510aa?themeId=1&templateId=5&fontStackId=0" allowfullscreen loading="lazy"></iframe>
+      </article>
+
+      <article id="etapa2" class="etapa" aria-labelledby="etapa2-titulo">
+        <h2 id="etapa2-titulo">🧪 Etapa 2 — Prática <span class="tag">Hands-on</span></h2>
+        <iframe src="https://wordwall.net/pt/embed/4179f94b0ce14520ad339aad3ee6a76f?themeId=1&templateId=36&fontStackId=0" allowfullscreen loading="lazy"></iframe>
+      </article>
+
+      <article id="etapa3" class="etapa" aria-labelledby="etapa3-titulo">
+        <h2 id="etapa3-titulo">🧬 Etapa 3 — Exercícios Avançados <span class="tag">Desafio</span></h2>
+        <iframe src="https://wordwall.net/pt/embed/d5e7d28428b44be1abf3bdeabdce9c7a?themeId=41&templateId=76&fontStackId=0" allowfullscreen loading="lazy"></iframe>
+      </article>
+
+      <article id="etapa4" class="etapa" aria-labelledby="etapa4-titulo">
+        <h2 id="etapa4-titulo">🔬 Etapa 4 — Revisão e Aplicação <span class="tag">Aplicar</span></h2>
+        <iframe src="https://wordwall.net/pt/embed/fafbe515de29467e98065f337bdd488e?themeId=1&templateId=46&fontStackId=0" allowfullscreen loading="lazy"></iframe>
+      </article>
+
+      <article id="etapa5" class="etapa" aria-labelledby="etapa5-titulo">
+        <h2 id="etapa5-titulo">🧫 Etapa 5 — Exercícios Finais <span class="tag">Consolidar</span></h2>
+        <iframe src="https://wordwall.net/pt/embed/9914bebf07f544f2a78078b27c136cb9?themeId=1&templateId=3&fontStackId=0" allowfullscreen loading="lazy"></iframe>
+      </article>
+
+      <article id="etapa6" class="etapa" aria-labelledby="etapa6-titulo">
+        <h2 id="etapa6-titulo">📝 Etapa 6 — Abra a Caixa <span class="tag">Explorar</span></h2>
+        <iframe src="https://wordwall.net/pt/embed/f056a446b8ec43588ee89014b0cb39ae?themeId=21&templateId=30&fontStackId=0" allowfullscreen loading="lazy"></iframe>
+      </article>
+
+      <article id="etapa7" class="etapa" aria-labelledby="etapa7-titulo">
+        <h2 id="etapa7-titulo">🎯 Etapa 7 — Exercícios Extras <span class="tag">Opcional</span></h2>
+        <iframe src="https://wordwall.net/pt/embed/9914bebf07f544f2a78078b27c136cb9?themeId=1&templateId=3&fontStackId=0" allowfullscreen loading="lazy"></iframe>
+        <div style="margin-top:14px">
+          <a class="btn btn-primary" href="#conclusao" onclick="showConclusao()">Finalizar Trilha</a>
+        </div>
+      </article>
+
+   <!-- Conclusão Melhorada -->
+<section id="conclusao" class="conclusao" aria-labelledby="conclusao-titulo">
+    <h2 id="conclusao-titulo">🎉 Parabéns, Explorador(a) da Trilha Cinética!</h2>
+    <p>Você concluiu com sucesso todas as etapas desta jornada interativa, dominando conceitos de <strong>Química ⚗️</strong> e <strong>Informática 💻</strong>.</p>
+    
+    <p style="font-size:1.15rem; color:#bb86fc; margin:16px 0;">
+      <em>"O conhecimento é a energia que transforma ideias em realidade."</em>
+    </p>
+  
+    <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-top:24px;">
+      <span class="shine" style="background:linear-gradient(135deg,#03dac6,#bb86fc);padding:8px 16px; border-radius:999px; font-weight:600; color:#121212; box-shadow:0 0 20px rgba(187,134,252,0.35)">Exploração</span>
+      <span class="shine" style="background:linear-gradient(135deg,#ff8a65,#ffb74d);padding:8px 16px; border-radius:999px; font-weight:600; color:#121212; box-shadow:0 0 20px rgba(255,183,77,0.35)">Prática</span>
+      <span class="shine" style="background:linear-gradient(135deg,#81c784,#4db6ac);padding:8px 16px; border-radius:999px; font-weight:600; color:#121212; box-shadow:0 0 20px rgba(77,182,172,0.35)">Desafio</span>
     </div>
-
-    <div class="etapa">
-        <h2>🔬 Etapa 4 — Revisão e Aplicação</h2>
-        <iframe src="https://wordwall.net/pt/embed/fafbe515de29467e98065f337bdd488e?themeId=1&templateId=46&fontStackId=0" frameborder="0" allowfullscreen></iframe>
+  
+    <p style="margin-top:24px; color:#ccc;">
+      Continue sua jornada de aprendizado: aplique o que aprendeu, explore novas ideias e nunca pare de crescer. Seu futuro é construído por cada descoberta que você faz hoje!
+    </p>
+  
+    <div style="margin-top:28px">
+      <button class="btn btn-ghost" onclick="reiniciarTrilha()">🔄 Reiniciar Trilha e Aperfeiçoar Conhecimento</button>
     </div>
+  </section>
+  
 
-    <div class="etapa">
-        <h2>🧫 Etapa 5 — Exercícios Finais</h2>
-        <iframe src="https://wordwall.net/pt/embed/9914bebf07f544f2a78078b27c136cb9?themeId=1&templateId=3&fontStackId=0" frameborder="0" allowfullscreen></iframe>
-    </div>
-
-    <div class="etapa">
-        <h2>📝 Etapa 6 — Abra a Caixa</h2>
-        <iframe src="https://wordwall.net/pt/embed/f056a446b8ec43588ee89014b0cb39ae?themeId=21&templateId=30&fontStackId=0" frameborder="0" allowfullscreen></iframe>
-    </div>
-
-    <div class="etapa">
-        <h2>🧫 Etapa 7 — Exercícios Extras</h2>
-        <iframe src="https://wordwall.net/pt/embed/9914bebf07f544f2a78078b27c136cb9?themeId=1&templateId=3&fontStackId=0" frameborder="0" allowfullscreen></iframe>
-        <a href="#conclusao" class="btn-finalizar" onclick="showConclusao()">Finalizar Trilha</a>
-    </div>
-
-</section>
-
-<section id="conclusao" class="conclusao">
-    <h2>🎉 Parabéns!</h2>
-    <p>Você concluiu toda a Trilha Cinética com sucesso! ⚗️💻</p>
-    <p>Continue estudando e aplicando os conceitos!</p>
-    <button class="btn-reiniciar" onclick="reiniciarTrilha()">Reiniciar Trilha 🔄</button>
-</section>
-
-<footer>
-    © 2025 - Trilha Cinética | Projeto Integrador com Química ⚗️ e Informática 💻 | Idealizado por: Hiarlley Lima, Maria Miriam, Taiane Duarte e Larissa Vítoria | A2
-</footer>
+    <footer>
+      © 2025 - Trilha Cinética | Projeto Integrador com Química ⚗️ e Informática 💻 | Idealizado por: Hiarlley Lima, Maria Miriam, Taiane Duarte e Larissa Vítoria | A2
+    </footer>
+  </main>
 
 <script>
-    function showConclusao() {
-        document.querySelector('.conclusao').classList.add('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  const menuBtn = document.getElementById('menuBtn');
 
-    function reiniciarTrilha() {
-        document.querySelector('.conclusao').classList.remove('active');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+  function openMenu(){
+    sidebar.classList.add('open');
+    overlay.classList.add('show');
+    menuBtn.setAttribute('aria-expanded','true');
+    document.body.style.overflow='hidden';
+  }
+  function closeMenu(){
+    sidebar.classList.remove('open');
+    overlay.classList.remove('show');
+    menuBtn.setAttribute('aria-expanded','false');
+    document.body.style.overflow='';
+  }
+  function toggleMenu(){
+    if(sidebar.classList.contains('open')) closeMenu(); else openMenu();
+  }
 
-        const iframes = document.querySelectorAll('.trilha iframe');
-        iframes.forEach(iframe => {
-            const src = iframe.src;
-            iframe.src = '';
-            setTimeout(() => iframe.src = src, 50);
-        });
+  menuBtn.addEventListener('click', toggleMenu);
+  overlay.addEventListener('click', closeMenu);
+  // Fecha menu ao clicar em um link
+  sidebar.querySelectorAll('a').forEach(a=>{
+    a.addEventListener('click', closeMenu);
+  });
+
+  function showConclusao(){
+    document.getElementById('conclusao').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function reiniciarTrilha(){
+    document.getElementById('conclusao').classList.remove('active');
+    const iframes = document.querySelectorAll('iframe');
+    iframes.forEach(iframe=>{
+      const src = iframe.src;
+      iframe.src = '';
+      setTimeout(()=> iframe.src = src, 40);
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Melhor navegação: se a URL já tiver hash ao carregar, aplica offset do header
+  window.addEventListener('load', ()=>{
+    if(location.hash){
+      const el = document.querySelector(location.hash);
+      if(el){ el.scrollIntoView(); }
     }
+  });
 </script>
-
 </body>
 </html>
-
