@@ -1,186 +1,121 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Trilha Cinética</title>
-<style>
-  :root {
-    --bg: #0d0d0f;
-    --surface: #141418;
-    --card: #1f1f23;
-    --card-light: #242428;
-    --text: #f5f5f5;
-    --muted: #a1a1aa;
-    --brand: #00ffe5;
-    --accent: #bb86fc;
-    --header-h: 80px;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Academia (Com Supabase)</title>
+    <!-- Importando a biblioteca do Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+        body { background-color: #f3f4f6; display: flex; justify-content: center; padding: 20px; }
+        .cartao { background-color: white; width: 100%; max-width: 400px; border-radius: 16px; padding: 30px 20px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); margin-top: 20px; }
+        h1 { text-align: center; color: #1f2937; margin-bottom: 20px; }
+        
+        .painel-lotacao { background-color: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 30px; }
+        .painel-lotacao p { color: #3b82f6; font-weight: bold; font-size: 14px; text-transform: uppercase; margin-bottom: 5px; }
+        .numero-lotacao { font-size: 48px; font-weight: 900; color: #1d4ed8; }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: "Inter", Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-  }
-
-  header {
-    background: linear-gradient(90deg, var(--brand), var(--accent));
-    padding: 1.2rem 2rem;
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #0d0d0f;
-    box-shadow: 0 4px 18px rgba(0,0,0,.6);
-    text-align: center;
-    letter-spacing: 1px;
-    border-radius: 0 0 12px 12px;
-  }
-
-  main {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-  }
-
-  .etapa {
-    background: var(--card-light);
-    border-radius: 18px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 8px 28px rgba(0,0,0,.7);
-    transition: transform .3s, box-shadow .3s;
-  }
-  .etapa:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 36px rgba(0,0,0,.85);
-  }
-
-  .etapa h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: var(--brand);
-    border-bottom: 1px solid #2a2a2e;
-    padding-bottom: .5rem;
-  }
-
-  iframe {
-    width: 100%;
-    height: 420px;
-    border: 2px solid var(--accent);
-    border-radius: 12px;
-    margin-top: 1rem;
-    background: #1a1a1d;
-    box-shadow: 0 6px 18px rgba(0,0,0,.6);
-  }
-
-  .btn-finalizar {
-    display: inline-block;
-    margin-top: 1.5rem;
-    padding: 14px 28px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #0d0d0f;
-    background: linear-gradient(90deg, var(--brand), var(--accent));
-    border-radius: 30px;
-    box-shadow: 0 6px 22px rgba(0,0,0,.5);
-    cursor: pointer;
-    transition: transform .25s, filter .25s;
-    text-decoration: none;
-  }
-  .btn-finalizar:hover {
-    transform: translateY(-3px) scale(1.05);
-    filter: brightness(1.1);
-  }
-
-  .conclusao {
-    display: none;
-    text-align: center;
-    background: var(--card-light);
-    border-radius: 18px;
-    padding: 3rem 2rem;
-    margin-top: 2rem;
-    box-shadow: 0 8px 30px rgba(0,0,0,.8);
-    animation: fadeIn .4s ease forwards;
-  }
-  .conclusao.active { display: block; }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(15px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  footer {
-    margin-top: 4rem;
-    padding: 1.5rem;
-    text-align: center;
-    font-size: .9rem;
-    color: var(--muted);
-    border-top: 1px solid #2a2a2e;
-  }
-</style>
+        .btn { width: 100%; padding: 25px; border: none; border-radius: 12px; font-size: 20px; font-weight: bold; color: white; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.1s; }
+        .btn:active { transform: scale(0.98); }
+        .btn-entrar { background-color: #22c55e; }
+        .btn-sair { background-color: #ef4444; display: none; }
+    </style>
 </head>
 <body>
 
-<header>⚡ Trilha Cinética — Jornada Interativa</header>
+    <div class="cartao">
+        <h1>Controle de Treino</h1>
 
-<main>
-  <section class="etapa" id="etapa1">
-    <h2>⚡ Etapa 1 — Introdução</h2>
-    <iframe src="https://wordwall.net/pt/embed/bc61963d722142209d7f15e09f3510aa?themeId=1&templateId=5&fontStackId=0" allowfullscreen></iframe>
-  </section>
+        <div class="painel-lotacao">
+            <p>Pessoas treinando agora</p>
+            <div id="contadorPessoas" class="numero-lotacao">...</div>
+        </div>
 
-  <section class="etapa" id="etapa2">
-    <h2>🧪 Etapa 2 — Prática</h2>
-    <iframe src="https://wordwall.net/pt/embed/4179f94b0ce14520ad339aad3ee6a76f?themeId=1&templateId=36&fontStackId=0" allowfullscreen></iframe>
-  </section>
+        <button id="btnEntrar" class="btn btn-entrar">FAZER CHECK-IN</button>
+        <button id="btnSair" class="btn btn-sair">ENCERRAR TREINO</button>
+    </div>
 
-  <section class="etapa" id="etapa3">
-    <h2>🧬 Etapa 3 — Revisão</h2>
-    <iframe src="https://wordwall.net/pt/embed/d5e7d28428b44be1abf3bdeabdce9c7a?themeId=41&templateId=76&fontStackId=0" allowfullscreen></iframe>
-  </section>
+    <script>
+        // 1. DADOS DE CONEXÃO REAIS
+        // Usei o formato correto da URL (.supabase.co) e a sua chave exata:
+        const SUPABASE_URL = 'https://mhnumaqrqthfmrmbqzmv.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1obnVtYXFycXRoZm1ybWJxem12Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc2NzA2MTcsImV4cCI6MjEwMzI0NjYxN30.Z1s8rza-9KsfJ2gdnx1U1-J3m84mLHewhnQETzry5-4';
 
-  <section class="etapa" id="etapa4">
-    <h2>🔬 Etapa 4 — Corrida Cinética</h2>
-    <iframe src="https://wordwall.net/pt/embed/fafbe515de29467e98065f337bdd488e?themeId=1&templateId=46&fontStackId=0" allowfullscreen></iframe>
-  </section>
+        // Iniciando o banco de dados
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  <section class="etapa" id="etapa5">
-    <h2>🧫 Etapa 5 — Ligue as Frases</h2>
-    <iframe src="https://wordwall.net/pt/embed/9914bebf07f544f2a78078b27c136cb9?themeId=1&templateId=3&fontStackId=0" allowfullscreen></iframe>
-  </section>
+        // 2. IDENTIFICAÇÃO DO USUÁRIO
+        let meuDispositivoId = localStorage.getItem('dispositivoId');
+        if (!meuDispositivoId) {
+            meuDispositivoId = 'user_' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('dispositivoId', meuDispositivoId);
+        }
 
-  <section class="etapa" id="etapa6">
-    <h2>📝 Etapa 6 — Desembaralhe</h2>
-    <iframe src="https://wordwall.net/pt/embed/93fac1ff9d5a492fbade6612611c78ba?themeId=45&templateId=72&fontStackId=0" allowfullscreen></iframe>
-  </section>
+        const btnEntrar = document.getElementById('btnEntrar');
+        const btnSair = document.getElementById('btnSair');
+        const contadorPessoas = document.getElementById('contadorPessoas');
 
-  <section class="etapa" id="etapa7">
-    <h2>🎯 Etapa 7 — Extras</h2>
-    <iframe src="https://wordwall.net/pt/embed/bc19f9e1a06c4cd89c03a557a3091690?themeId=1&templateId=2&fontStackId=0" allowfullscreen></iframe>
-    <button class="btn-finalizar" onclick="finalizarTrilha()">Finalizar Trilha</button>
-  </section>
+        // 3. BUSCANDO OS DADOS
+        async function carregarDados() {
+            try {
+                // Conta as pessoas
+                const { count, error: erroContagem } = await supabase
+                    .from('check_ins')
+                    .select('*', { count: 'exact', head: true })
+                    .eq('status', 'ACTIVE');
+                
+                if (erroContagem) throw erroContagem;
+                
+                contadorPessoas.innerText = count || 0;
 
-  <section id="conclusao" class="conclusao">
-    <h2>🎉 Parabéns, Explorador(a) da Trilha Cinética!</h2>
-    <p>Você concluiu todas as etapas e as atividades foram reiniciadas. Continue praticando e se aprofundando ⚗️💻.</p>
-  </section>
-</main>
+                // Verifica status do usuário atual
+                const { data, error: erroUsuario } = await supabase
+                    .from('check_ins')
+                    .select('*')
+                    .eq('dispositivo_id', meuDispositivoId)
+                    .eq('status', 'ACTIVE');
+                    
+                if (erroUsuario) throw erroUsuario;
 
-<footer>© 2025 - Trilha Cinética | Projeto Integrador com Química ⚗️ e Informática 💻</footer>
+                if (data && data.length > 0) {
+                    btnEntrar.style.display = 'none';
+                    btnSair.style.display = 'block';
+                } else {
+                    btnEntrar.style.display = 'block';
+                    btnSair.style.display = 'none';
+                }
+            } catch (erro) {
+                console.error("Erro no Supabase:", erro.message);
+                // Se der erro, mostra no console do navegador para podermos investigar
+            }
+        }
 
-<script>
-  function finalizarTrilha() {
-    // Reinicia todas as atividades
-    document.querySelectorAll("iframe").forEach(iframe => {
-      iframe.src = iframe.src;
-    });
-    // Mostra a conclusão
-    document.getElementById('conclusao').classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-</script>
+        // 4. BOTÕES
+        btnEntrar.addEventListener('click', async function() {
+            btnEntrar.innerText = "Carregando...";
+            await supabase.from('check_ins').insert([
+                { dispositivo_id: meuDispositivoId, status: 'ACTIVE' }
+            ]);
+            btnEntrar.innerText = "FAZER CHECK-IN";
+            carregarDados();
+        });
 
+        btnSair.addEventListener('click', async function() {
+            btnSair.innerText = "Carregando...";
+            await supabase.from('check_ins')
+                .update({ status: 'COMPLETED' })
+                .eq('dispositivo_id', meuDispositivoId)
+                .eq('status', 'ACTIVE');
+            btnSair.innerText = "ENCERRAR TREINO";
+            carregarDados();
+        });
+
+        // 5. INICIAR
+        carregarDados();
+        
+        // Mantém a tela atualizada para ver outras pessoas entrando
+        setInterval(carregarDados, 5000);
+    </script>
 </body>
 </html>
-
